@@ -114,4 +114,7 @@ private:
 
 	void Pause();
 	bool myGamePaused = false;
+
+	int CheckPoint = 0;
+	int Lap = 1;
 };

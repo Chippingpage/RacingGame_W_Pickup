@@ -169,7 +169,11 @@ void APlayerPawn::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	if (OtherActor->IsA(ACheckPoint::StaticClass()))
 	{
 		SaveGame();
-
+		CheckPoint++;
+		if (CheckPoint == 11) {
+			Lap++;
+			CheckPoint = 0;
+		}
 	}
 
 
