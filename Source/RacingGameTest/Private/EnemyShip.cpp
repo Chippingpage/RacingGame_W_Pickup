@@ -49,7 +49,27 @@ void AEnemyShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	GetWorld()->GetTimerManager().SetTimer(TriggerDestroyTimerHandle, this, &AEnemyShip::TriggerShoot, 5.f, true);
+	ShootTimer -= 0.01;
+	if (ShootTimer <= 0.f) {
+
+		FVector Location = GetActorLocation();
+		FVector FwdVector = GetActorForwardVector();
+		FwdVector *= 400;
+		Location += FwdVector;
+		UE_LOG(LogTemp, Warning, TEXT("AI Ready"));
+
+		UWorld* World = GetWorld();
+		if (World)
+		{
+
+
+			World->SpawnActor<AActor>(BulletSpawn, Location, GetActorRotation());
+			UE_LOG(LogTemp, Warning, TEXT("AI Shooting"));
+			ShootTimer = 5;
+		}
+	}
+
+
 }
 
 // Called to bind functionality to input
@@ -61,17 +81,7 @@ void AEnemyShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void AEnemyShip::TriggerShoot()
 {
-	//UWorld* World = GetWorld();
-	//if (World)
-	//{
 
-	//	FVector Location = GetActorLocation();
-	//	FVector FwdVector = GetActorForwardVector();
-	//	FwdVector *= 400;
-	//	Location += FwdVector;
-	//	World->SpawnActor<AActor>(BulletSpawn, Location, GetActorRotation());
-
-	//}
 }
 
 void AEnemyShip::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -82,5 +92,13 @@ void AEnemyShip::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		AIController->MoveToActor(PlayerPawn, 100);
 		UE_LOG(LogTemp, Warning, TEXT("Moving"));
 	}
+
+	//if (IsValid(OtherActor)) {
+	//	if (OtherActor->IsA(ABullet::StaticClass)) {
+
+	//		Cast<ABullet>(OtherActor)->Destroy();
+	//		ShootTimer += 20;
+	//	}
+	//}
 }
 

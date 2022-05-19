@@ -169,6 +169,7 @@ void APlayerPawn::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	if (OtherActor->IsA(ACheckPoint::StaticClass()))
 	{
 		SaveGame();
+
 	}
 
 
@@ -311,6 +312,7 @@ void APlayerPawn::Pause()
 	{
 		UGameplayStatics::SetGamePaused(GetWorld(), true);
 	}
+	myGamePaused = !myGamePaused;
 	UE_LOG(LogTemp, Warning, TEXT("Paused"))
 }
 

@@ -46,9 +46,10 @@ public:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<AActor> BulletSpawn;
 
-	FTimerHandle TriggerDestroyTimerHandle;
+	//FTimerHandle TriggerDestroyTimerHandle;
 	UFUNCTION()
 		void TriggerShoot();
+	float ShootTimer = 5;
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
