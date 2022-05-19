@@ -79,17 +79,13 @@ void AEnemyShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
-void AEnemyShip::TriggerShoot()
-{
-
-}
 
 void AEnemyShip::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	APlayerPawn* PlayerPawn = Cast<APlayerPawn>(OtherActor);
 	if (PlayerPawn)
 	{
-		AIController->MoveToActor(PlayerPawn, 100);
+		AIController->MoveToActor(PlayerPawn, 0);
 		UE_LOG(LogTemp, Warning, TEXT("Moving"));
 	}
 

@@ -47,8 +47,7 @@ public:
 		TSubclassOf<AActor> BulletSpawn;
 
 	//FTimerHandle TriggerDestroyTimerHandle;
-	UFUNCTION()
-		void TriggerShoot();
+
 	float ShootTimer = 5;
 
 	UFUNCTION()

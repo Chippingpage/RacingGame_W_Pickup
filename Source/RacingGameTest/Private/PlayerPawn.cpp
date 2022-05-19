@@ -121,7 +121,7 @@ void APlayerPawn::Tick(float DeltaTime)
 
 
 
-	UE_LOG(LogTemp, Warning, TEXT("Current BoostFuel: %f"), BoostAmount);
+	//UE_LOG(LogTemp, Warning, TEXT("Current BoostFuel: %f"), BoostAmount);
 	if (bCanPlay) {
 		float MaxDistance = 100.f;
 		FVector EndLocation = GetActorLocation() + (GetActorUpVector() * -MaxDistance);
@@ -135,7 +135,7 @@ void APlayerPawn::Tick(float DeltaTime)
 		}
 	}
 
-	if (Lap == 3) {
+	if (Lap == 4) {
 
 		UGameplayStatics::OpenLevel(GetWorld(), "MainMenuMap");
 
@@ -182,6 +182,12 @@ void APlayerPawn::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 			Lap++;
 			CheckPoint = 0;
 		}
+	}
+
+	if (OtherActor->IsA(ABullet::StaticClass()))
+	{
+		Cast<ABullet>(OtherActor)->Destroy();
+		PawnMovementComponent->MaxSpeed -= 500.f;
 	}
 
 }
@@ -246,21 +252,27 @@ void APlayerPawn::Shooting()
 {
 	if (bCanPlay)
 	{
-		if (Ammo > 0) {
-			Ammo--;
+		if (bSwitchCamera) 
+		{
+			if (Ammo > 0) {
+				Ammo--;
 
-			UWorld* World = GetWorld();
-			if (World)
-			{
+				UWorld* World = GetWorld();
+				if (World)
+				{
 
-				FVector Location = GetActorLocation();
-				FVector FwdVector = GetActorForwardVector();
-				FwdVector *= 400;
-				Location += FwdVector;
-				World->SpawnActor<AActor>(BulletSpawn, Location, GetActorRotation());
+					FVector Location = GetActorLocation();
+					FRotator Rotation = GetActorRotation();
+					FVector FwdVector = GetActorForwardVector();
+					FwdVector *= -400;
+					Location += FwdVector;
+					Rotation.Yaw += 180;
+					Rotation.Pitch += 3;
+					World->SpawnActor<AActor>(BulletSpawn, Location, Rotation);
 
+				}
+				UE_LOG(LogTemp, Warning, TEXT("Shooting"));
 			}
-			UE_LOG(LogTemp, Warning, TEXT("Shooting"));
 		}
 	}
 

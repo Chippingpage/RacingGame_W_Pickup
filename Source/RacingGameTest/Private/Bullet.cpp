@@ -3,6 +3,7 @@
 
 #include "Bullet.h"
 #include "PlayerPawn.h"
+#include "EnemyShip.h"
 
 // Sets default values
 ABullet::ABullet()
@@ -37,5 +38,12 @@ void ABullet::Tick(float DeltaTime)
 
 void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherbodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	AEnemyShip* EnemyShip = Cast<AEnemyShip>(OtherActor);
+	if (EnemyShip)
+	{
+		Cast<ABullet>(OtherActor)->Destroy();
+		Cast<AEnemyShip>(OtherActor)->ShootTimer += 20;
+
+	}
 }
 
