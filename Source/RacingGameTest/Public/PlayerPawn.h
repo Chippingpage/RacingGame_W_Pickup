@@ -67,7 +67,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 		float BoostPower = 10000.f;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lap")
+		int Lap = 1;
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<AActor> BulletSpawn;
@@ -82,6 +83,7 @@ public:
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
+
 
 	bool bCanPlay = false;
 
@@ -102,8 +104,6 @@ private:
 	void MoveRight(float Value);
 	float CurrentTurnSpeed;
 
-	float RefillTimer;
-
 	void Shooting();
 
 	void SwitchCamera();
@@ -116,5 +116,5 @@ private:
 	bool myGamePaused = false;
 
 	int CheckPoint = 0;
-	int Lap = 1;
+	
 };

@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "CheckPoint.h"
 #include "MainSaveGame.h"
+#include "Blueprint/UserWidget.h"
 #include "Components/BoxComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/Pawn.h"
@@ -133,6 +134,21 @@ void APlayerPawn::Tick(float DeltaTime)
 			//UE_LOG(LogTemp, Warning, TEXT("Tracer works"));
 		}
 	}
+
+	if (Lap == 2) {
+
+		UGameplayStatics::OpenLevel(GetWorld(), "MainMenuMap");
+
+		APlayerController* PC = Cast<APlayerController>(GetController());
+
+		if (PC)
+		{
+			PC->bShowMouseCursor = true;
+			PC->bEnableClickEvents = true;
+			PC->bEnableMouseOverEvents = true;
+		}
+		UE_LOG(LogTemp, Warning, TEXT("You Win"));
+	}
 }
 
 // Called to bind functionality to input
@@ -170,7 +186,7 @@ void APlayerPawn::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	{
 		SaveGame();
 		CheckPoint++;
-		if (CheckPoint == 11) {
+		if (CheckPoint == 12) {
 			Lap++;
 			CheckPoint = 0;
 		}
@@ -217,7 +233,7 @@ void APlayerPawn::StartBoosting()
 
 void APlayerPawn::StopBoosting()
 {
-	RefillTimer = 0.f;
+	
 	bBoosting = false;
 }
 
@@ -303,6 +319,7 @@ void APlayerPawn::LoadGame()
 
 	UE_LOG(LogTemp, Warning, TEXT("LOADED: %s"), *LoadGameInstance->PlayerName);
 
+	CheckPoint--;
 }
 
 void APlayerPawn::Pause()
