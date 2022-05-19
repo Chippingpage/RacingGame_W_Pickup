@@ -111,7 +111,7 @@ void APlayerPawn::Tick(float DeltaTime)
 
 	if (bBoosting)
 	{
-		BoostAmount -= 0.05f;
+		BoostAmount -= 0.005f;
 		PlayerMesh->AddForce(Forward * BoostPower * PlayerMesh->GetMass());
 		if (BoostAmount < 0.f)
 		{
@@ -121,7 +121,7 @@ void APlayerPawn::Tick(float DeltaTime)
 
 
 
-	//UE_LOG(LogTemp, Warning, TEXT("Current BoostFuel: %f"), BoostAmount);
+	UE_LOG(LogTemp, Warning, TEXT("Current BoostFuel: %f"), BoostAmount);
 	if (bCanPlay) {
 		float MaxDistance = 100.f;
 		FVector EndLocation = GetActorLocation() + (GetActorUpVector() * -MaxDistance);
@@ -135,18 +135,10 @@ void APlayerPawn::Tick(float DeltaTime)
 		}
 	}
 
-	if (Lap == 2) {
+	if (Lap == 3) {
 
 		UGameplayStatics::OpenLevel(GetWorld(), "MainMenuMap");
 
-		APlayerController* PC = Cast<APlayerController>(GetController());
-
-		if (PC)
-		{
-			PC->bShowMouseCursor = true;
-			PC->bEnableClickEvents = true;
-			PC->bEnableMouseOverEvents = true;
-		}
 		UE_LOG(LogTemp, Warning, TEXT("You Win"));
 	}
 }
@@ -191,7 +183,6 @@ void APlayerPawn::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 			CheckPoint = 0;
 		}
 	}
-
 
 }
 

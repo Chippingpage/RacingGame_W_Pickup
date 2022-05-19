@@ -33,7 +33,7 @@ UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BoostPickUp")
 class UStaticMeshComponent* AmmoPackMesh{ nullptr };
 
 UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "BoostPickUp")
-int BoostGiven;
+float BoostGiven;
 
 
 UFUNCTION()

@@ -61,14 +61,13 @@ public:
 		int Ammo = 30;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
-		float BoostAmount = 5; // Fuel
+		float BoostAmount = 1; // Fuel
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
-		float MaxBoostAmount = 5;
+		float MaxBoostAmount = 1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PlayerVariables")
 		float BoostPower = 10000.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lap")
-		int Lap = 1;
+
 
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<AActor> BulletSpawn;
@@ -84,6 +83,8 @@ public:
 			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
 
+	UPROPERTY( BlueprintReadWrite, meta = (AllowPrivateAccsess = "true"))
+		int Lap = 1;
 
 	bool bCanPlay = false;
 

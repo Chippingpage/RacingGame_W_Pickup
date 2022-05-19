@@ -11,13 +11,22 @@ ABoostPickUp::ABoostPickUp()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
-	SetRootComponent(CollisionBox);
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABoostPickUp::OnOverlap);
-
+	
 	AmmoPackMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CollisionBoxMesh"));
-	AmmoPackMesh->SetupAttachment(CollisionBox);
+	SetRootComponent(AmmoPackMesh);
 
+
+
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
+	CollisionBox->SetupAttachment(AmmoPackMesh);
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ABoostPickUp::OnOverlap);
+	
+	FVector ColliScaling;
+	ColliScaling.X = 1.5f;
+	ColliScaling.Y = 1.5f;
+	ColliScaling.Z = 30.0f;
+
+	CollisionBox->SetWorldScale3D(ColliScaling);
 }
 
 // Called when the game starts or when spawned
@@ -39,8 +48,10 @@ void ABoostPickUp::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* O
 	APlayerPawn* PlayerPawn = Cast<APlayerPawn>(OtherActor);
 	if (PlayerPawn)
 	{
-		PlayerPawn->BoostAmount += 2;
+		PlayerPawn->BoostAmount += 0.2;
+		SetActorHiddenInGame(true);
 		SetActorEnableCollision(false);
+		this->Destroy();
 	}
 
 }
